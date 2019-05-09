@@ -1,5 +1,7 @@
 #version 300 es
-
+// #define SHOW_SHAPE
+// #define SHOW_AO
+// #define SHOW_COL_TRAN
 
 uniform mat4 u_Model;
 uniform mat4 u_ModelInvTr;
@@ -194,6 +196,16 @@ void main()
   // lower terrain is lighted by lava, thus less ambient
   float ambient = mix(1.0, sqrt(stair_root_dis), height - normalized_lava_height);
   color *= ambient;
+
+  #ifdef SHOW_SHAPE
+  color = vec3(height);
+  #endif
+  #ifdef SHOW_AO
+  color = vec3(ambient);
+  #endif
+  #ifdef SHOW_COL_TRAN
+  color = mix(vec3(0.0, 1.0, 0.0), vec3(1.0, 0.0, 0.0), height - normalized_lava_height);
+  #endif
 
   fs_Col = vec4(vec3(color), 1.0);
 
