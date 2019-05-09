@@ -5,6 +5,7 @@ uniform mat4 u_Model;
 uniform mat4 u_ModelInvTr;
 uniform mat4 u_ViewProj;
 uniform vec2 u_PlanePos; // Our location in the virtual world displayed by the plane
+uniform float u_LavaHeight;
 
 in vec4 vs_Pos;
 in vec4 vs_Nor;
@@ -175,17 +176,25 @@ void main()
   
   // fbm
   float fbm_contribution = multiFBM(st);
-  float fbm_scale = 0.08;
+  float fbm_scale = 0.1;
   height += fbm_contribution * fbm_scale;
 
   height /= (worley_scale + fbm_scale);
 
   vec3 top_col = vec3(0.603, 0.313, 0.203);
+
   vec3 bottom_cal = vec3(0.909, 0.188, 0.082);
   float color_factor = easeOutExpo(height);
   vec3 color = mix(bottom_cal, top_col, color_factor);
-  float ambient = mix(1.0, sqrt(stair_root_dis), height);
+  float normalized_lava_height = u_LavaHeight / final_height_scale;
+
+  color = mix(color, vec3(1.0, 0.0, 0.0), height - normalized_lava_height);
+
+  // ambient
+  // lower terrain is lighted by lava, thus less ambient
+  float ambient = mix(1.0, sqrt(stair_root_dis), height - normalized_lava_height);
   color *= ambient;
+
   fs_Col = vec4(vec3(color), 1.0);
 
   

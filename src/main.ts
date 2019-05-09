@@ -16,8 +16,8 @@ const controls = {
   tesselations: 5,
   'Load Scene': loadScene, // A function pointer, essentially
   'lavaColor_0': '#ff0000',
-  'lavaColor_1': '#110000',
-  'lavaHeight': 2.0,
+  'lavaColor_1': '#c03131',
+  'lavaHeight': 0.4,
 };
 
 let square: Square;
@@ -172,7 +172,8 @@ function main() {
       lavaCol1.rgb().array()[1] / 255.0,
       lavaCol1.rgb().array()[2] / 255.0));
 
-      lavaShader.setLavaHeight(controls['lavaHeight']);
+    lavaShader.setLavaHeight(controls['lavaHeight']);
+    lambert.setLavaHeight(controls['lavaHeight']);
 
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
