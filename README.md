@@ -11,7 +11,7 @@ An noise-based terrain generator and viewer implemented in WebGL.
 ![](img/result.png)
 ![](img/result.gif)
 
-## [Live Demo](https://zichuanyun.github.io/l-systems-WebGL/index.html)
+## [Live Demo](https://zichuanyun.github.io/noisy-terrain-WebGL/)
 
 ## Features
 
