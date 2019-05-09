@@ -139,8 +139,6 @@ vec3 IQ_worley_noise( in vec2 x ) {
 }
 
 float stair(float val, float step) {
-  // val += random(vec2(val)) * 0.02;
-  // HERE
   return floor(val * step) / step;
 }
 
@@ -164,11 +162,13 @@ void main()
   // worley
   float worley_tile = 0.03;
   vec3 iqwn = IQ_worley_noise(st * worley_tile);
-  float worley_contribution = iqwn.x;
+  float worley_dis = iqwn.x;
   // isolines
   // worley_contribution = worley_contribution*(0.5 + 0.5*sin(64.0*worley_contribution));
   float angle = (iqwn.y*iqwn.y+iqwn.z*iqwn.z)/(iqwn.y*iqwn.z);
-  worley_contribution = stair(worley_contribution, 15.0);
+  float num_floor = 15.0;
+  float worley_contribution = stair(worley_dis, num_floor);
+  float stair_root_dis = 1.0 - fract(worley_dis * num_floor); // distance from the stair edge
   // borders
   float worley_scale = 2.0;
   height += worley_contribution * worley_scale;
@@ -184,10 +184,13 @@ void main()
   vec3 bottom_cal = vec3(0.909, 0.188, 0.082);
   float color_factor = easeOutExpo(height);
   vec3 color = mix(bottom_cal, top_col, color_factor);
+  float ambient = mix(1.0, sqrt(stair_root_dis), height);
+  color *= ambient;
   fs_Col = vec4(vec3(color), 1.0);
+
+  
 
   height *= final_height_scale;
   modelposition.y = height;
   gl_Position = u_ViewProj * modelposition;
-
 }

@@ -1,4 +1,4 @@
-import {vec2, vec4, mat4} from 'gl-matrix';
+import {vec2, vec4, mat4, vec3} from 'gl-matrix';
 import Drawable from './Drawable';
 import {gl} from '../../globals';
 
@@ -30,6 +30,11 @@ class ShaderProgram {
   unifViewProj: WebGLUniformLocation;
   unifColor: WebGLUniformLocation;
   unifPlanePos: WebGLUniformLocation;
+  unifTime: WebGLUniformLocation;
+  unifLavaCol0: WebGLUniformLocation;
+  unifLavaCol1: WebGLUniformLocation;
+  unifLavaHeight: WebGLUniformLocation;
+
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -49,6 +54,10 @@ class ShaderProgram {
     this.unifModelInvTr = gl.getUniformLocation(this.prog, "u_ModelInvTr");
     this.unifViewProj   = gl.getUniformLocation(this.prog, "u_ViewProj");
     this.unifPlanePos   = gl.getUniformLocation(this.prog, "u_PlanePos");
+    this.unifTime       = gl.getUniformLocation(this.prog, "u_Time");
+    this.unifLavaCol0   = gl.getUniformLocation(this.prog, "u_LavaCol0");
+    this.unifLavaCol1   = gl.getUniformLocation(this.prog, "u_LavaCol1");
+    this.unifLavaHeight = gl.getUniformLocation(this.prog, "u_LavaHeight")
   }
 
   use() {
@@ -83,6 +92,34 @@ class ShaderProgram {
     this.use();
     if (this.unifPlanePos !== -1) {
       gl.uniform2fv(this.unifPlanePos, pos);
+    }
+  }
+
+  setTime(t: number) {
+    this.use();
+    if (this.unifTime !== -1) {
+      gl.uniform1f(this.unifTime, t);
+    }
+  }
+
+  setLavaCol0(col: vec3) {
+    this.use();
+    if (this.unifLavaCol0 !== -1) {
+      gl.uniform3fv(this.unifLavaCol0, col);
+    }
+  }
+
+  setLavaCol1(col: vec3) {
+    this.use();
+    if (this.unifLavaCol1 !== -1) {
+      gl.uniform3fv(this.unifLavaCol1, col);
+    }
+  }
+
+  setLavaHeight(h: number) {
+    this.use();
+    if (this.unifLavaHeight !== -1) {
+      gl.uniform1f(this.unifLavaHeight, h);
     }
   }
 
