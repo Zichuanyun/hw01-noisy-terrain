@@ -25,9 +25,9 @@ The shape is based on IQ's Voronoi border finding algorithm. Some noise is also 
 
 Fake AO is applied. When the lava is higher, the AO is less.
 
-![](img/ao.png)
+![](img/AO.png)
 
-![](img/ao.gif)
+![](img/AO.gif)
 
 ### Color Transist
 
