@@ -2,6 +2,8 @@
 
 An noise-based terrain generator and viewer implemented in WebGL.
 
+## [Live Demo](https://zichuanyun.github.io/noisy-terrain-WebGL/)
+
 **University of Pennsylvania, CIS 566 Procedrual Graphics, Noise Terrain**
 
 * Zichuan Yu
@@ -11,7 +13,7 @@ An noise-based terrain generator and viewer implemented in WebGL.
 ![](img/result.png)
 ![](img/result.gif)
 
-## [Live Demo](https://zichuanyun.github.io/noisy-terrain-WebGL/)
+
 
 ## Features
 
